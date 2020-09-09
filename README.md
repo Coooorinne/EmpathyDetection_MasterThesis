@@ -1,6 +1,6 @@
 # EmpathyDetection_MasterThesis
 
-This repository contains codes that I've created for my master's thesis. 
+This repository contains the source codes of my master's thesis. 
 
 About my thesis: 
 
@@ -11,7 +11,7 @@ About my thesis:
 
 
 
-About the codes: 
+About the source codes: 
 - Data Preparation including Data Analysis
 - LSTM Model to predict empathy
 - BERT Model using FARM to predict empathy
