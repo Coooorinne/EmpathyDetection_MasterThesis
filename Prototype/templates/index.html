@@ -1,0 +1,215 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/progress.css') }}">
+    <title>ELEA</title>
+  </head>
+  <body>
+    <div id="overlay" style="display:none;">
+      <div class="spinner"></div>
+      <br/>
+      <p class="text" style="color: cadetblue;font-weight: bold;">Please be patient, ELEA is analyzing your text.</p>
+    </div>
+    <br>
+    <div class="container">
+        <nav class="navbar navbar-expand navbar-dark sticky-top" style="background-color: #FFFFFF;">
+          <a class="navbar-brand">
+            <img src="{{ url_for('static', filename='images/ELEA.png') }}" alt="Logo" style="height:50px;">
+          </a>
+          <ul class="navbar-nav mr-auto"></ul>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+
+
+                <img src="{{ url_for('static', filename='images/logo-im.jpg') }}" alt="Logo" style="height:50px;">
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+              <h5 class="text-center">Please read the following business idea carefully:</h5>
+              <p class="lead text-justify">
+                    SecondLife ist eine neuartige Schweizer Plattform für die umweltbewusste, nachhaltig-denkende Person. Die Plattform ermöglicht Menschen, sich in einer Zeit von Überkonsum und Luxus zurechtzufinden und gleichzeitig ihren Beitrag an die Umwelt zu leisten, ohne auf Luxus verzichten zu müssen. Jede Person kann sich kostenlos auf der Plattform registrieren und ein persönliches Konto erstellen. Damit erhält man Zugang zu einem auserwählten Marktplatz von Designer- und Marken-Fashionartikel mit speziellem Fokus auf nachhaltiger Produktion. SecondLife wählt ihre Anbieter mit Sorgfalt aus und stellt sicher, dass nur fair produzierte Modeartikel auf die Plattform gelangen. Registrierte Benutzer haben nun die Möglichkeit, bestimmte Kleider und Modeartikel auf dem Marktplatz zu erwerben oder zu mieten. Da die Kleider auf dem Marktplatz bereits auf Events, Fashionshows oder im Laden getragen wurden und somit nicht «neu-ab-Stange» sind, ist der Preis reduziert. SecondLife garantiert mindestens 20% Preisnachlass auf den üblichen Verkaufspreis. Der definitive Preis wird vom Anbieter bestimmt. Nutzer zahlen direkt über die Plattform an den Anbieter, wobei ein kleiner Betrag für die Weiterentwicklung von SecondLife behalten wird. Wird ein Kleidungsstück gemietet, kann es kostenlos zum Anbieter zurückgeschickt werden. Kleider, welche mindestens bereits 10x vermietet wurden, müssen vom Anbieter zukünftig mit einem Preisnachlass von 50% angeboten werden. SecondLife garantiert einen sicheren und anonymisierten Umgang mit jeglichen Daten der Anbieter und Nachfrager.
+              </p>
+            </div>
+        </div>
+        <hr><h5 class="text-center">Please write your peer review.</h5>
+	
+        <form class="text-center" action="{{ url_for('index') }}" method="POST">
+	<p </p>
+
+            <div class="form-group">
+              <label for="strengths">Enter the strengths about the peer's business model</label>
+              <textarea class="form-control" name='strengths' id="strengths" cols="30" rows="5" required>{{request.form['strengths']}}</textarea>
+            </div>
+            <br>
+            <div class="form-group">
+              <label for="weaknesses">Enter the weaknesses about the peer's business model</label>
+              <textarea class="form-control" name='weaknesses' id="weaknesses" cols="30" rows="5" required>{{request.form['weaknesses']}}</textarea>
+            </div>
+            <br>
+            <div class="form-group">
+              <label for="improvements">Enter suggestions for improvements about the peer's business model</label>
+              <textarea class="form-control" name='suggestions' id="suggestions" cols="30" rows="5" required>{{request.form['suggestions']}}</textarea>
+            </div>
+            <button type="submit" class="btn btn-success btn-lg center" id="analyze" style="background-color: #00802F;"  onclick="on()">Analyze</button>
+            <br><br><br>
+        </form>
+
+        <hr>
+        <div class="row mb-5">
+          <div class="col-xl-12 rounded border">
+            {% if emo_labels and cog_labels %}
+              <div id="feedback">
+                <div class="container-fluid text-center mt-3">
+                  <h1>Your empathy learning dashboard</h1><br/>
+                  <p class="text"<^>If you want to know more about how ELEA works, click <a href="#" onclick="window.open('{{ url_for('popup') }}', 'ELEA', 'width=500,height=500');" >here</a>.</p>
+
+                </div>
+
+                <!-- DASHBORAD STATS -->
+
+                <div class="row text-center" style="height: auto">
+                  <div class="col-md-6 text-left ml-5">
+                    <h4>Detailed feedback on your review</h4>
+                    <br>
+                      <h5>Strengths</h5>
+                      {% if 'None' not in emo_labels['strength'] %}
+                      <p class="text"><i>Emotional Empathy:</i> Your input text was <span style="color: orange;">{{ emo_labels['strength'].split("'")[1] }}.</span></p>
+                      <p class="text text-justify">{{ emo_feedback['strength'][emo_labels['strength'].split("'")[1]] }}</p>
+                      {% else %}
+                        No label was predicted. Please re-enter your feedback.<br>
+                      {% endif %}
+                      {% if 'None' not in cog_labels['strength'] %}
+                      <p class="text"><i>Cognitive Empathy:</i> Your input text was <span style="color: orange;">{{ cog_labels['strength'].split("'")[1] }}.</span></p>
+                      <p class="text text-justify">{{ cog_feedback['strength'][cog_labels['strength'].split("'")[1]] }}</p>
+                      {% else %}
+                        No label was predicted. Please re-enter your feedback.<br>
+                      {% endif %}
+                      <h5>Weaknesses</h5>
+                      {% if 'None' not in emo_labels['weakness'] %}
+                      <p class="text"><i>Emotional Empathy:</i> Your input text was  <span style="color: orange;">{{ emo_labels['weakness'].split("'")[1] }}.</span></p>
+                      <p class="text text-justify">{{ emo_feedback['weakness'][emo_labels['weakness'].split("'")[1]] }}</p>
+                      {% else %}
+                        No label was predicted. Please re-enter your feedback.<br>
+                      {% endif %}
+                      {% if 'None' not in cog_labels['weakness'] %}
+                      <p class="text"><i>Cognitive Empathy:</i> Your input text was  <span style="color: orange;">{{ cog_labels['weakness'].split("'")[1] }}.</span></p>
+                      <p class="text text-justify">{{ cog_feedback['weakness'][cog_labels['weakness'].split("'")[1]] }}</p>
+                      {% else %}
+                        No label was predicted. Please re-enter your feedback.<br>
+                      {% endif %}
+                      <h5>Suggestions for Improvements</h5>
+                      {% if 'None' not in emo_labels['suggestion'] %}
+                      <p class="text"><i>Emotional Empathy:</i> Your input text was  <span style="color: orange;">{{ emo_labels['suggestion'].split("'")[1] }}.</span></p>
+                      <p class="text text-justify">{{ emo_feedback['suggestion'][emo_labels['suggestion'].split("'")[1]] }}</p>
+                      {% else %}
+                        No label was predicted. Please re-enter your feedback.<br>
+                      {% endif %}
+                      {% if 'None' not in cog_labels['suggestion'] %}
+                      <p class="text"><i>Cognitive Empathy:</i> Your input text was  <span style="color: orange;">{{ cog_labels['suggestion'].split("'")[1] }}.</span></p>
+                      <p class="text text-justify">{{ cog_feedback['suggestion'][cog_labels['suggestion'].split("'")[1]] }}</p>
+                      {% else %}
+                        No label was predicted. Please re-enter your feedback.<br>
+                      {% endif %}
+
+
+                  </div>
+                  <div class="col-md-5">
+                    <h4>General Overview</h4>
+                    <br>
+                      <div class="progress mx-auto" data-value='{{ perc_score }}'>
+                        <span class="progress-left">
+                            <span class="progress-bar border-success"></span>
+                        </span>
+                        <span class="progress-right">
+                            <span class="progress-bar border-success"></span>
+                        </span>
+                        <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
+                          <div class="h2 font-weight-bold">{{ perc_score }}</div><sup class="small">%</sup>
+                        </div>
+                      </div>
+                      <br><br>
+                      <p class="text">Empathy Score: {{ perc_score }}%</p>
+                      <p class="text" style="color:orange; font-weight: 600;">
+                        {{ feedback }}
+                      </p>
+                    </div>
+                  </div>
+                  {% endif %}
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript">
+      $(function() {
+
+        $(".progress").each(function() {
+
+          var value = $(this).attr('data-value');
+          var left = $(this).find('.progress-left .progress-bar');
+          var right = $(this).find('.progress-right .progress-bar');
+
+          if (value > 0) {
+            if (value <= 50) {
+              right.css('transform', 'rotate(' + percentageToDegrees(value) + 'deg)')
+            } else {
+              right.css('transform', 'rotate(180deg)')
+              left.css('transform', 'rotate(' + percentageToDegrees(value - 50) + 'deg)')
+            }
+          }
+
+        })
+
+        function percentageToDegrees(percentage) {
+          return percentage / 100 * 360
+        }
+
+        });
+
+        document.getElementById('feedback').scrollIntoView();
+        event.preventDefault();
+    </script>
+
+    <script>
+      // function on() {
+      //   $.LoadingOverlay("show");
+      // }
+      $(document).ready(function() {
+              $('#analyze').click(function(){
+                if ($('#strengths').val() != '' && $('#weaknesses').val() != '' && $('#suggestions').val() != ''){
+                  $('#overlay').fadeIn().delay(100000).fadeOut();
+              }
+            });
+
+
+        });
+    </script>
+    <script>
+      if ( window.history.replaceState ) {
+          window.history.replaceState( null, null, window.location.href );
+      }
+    </script>
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script> -->
+
+
+  </body>
+</html>

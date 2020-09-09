@@ -1,0 +1,56 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/progress.css') }}">
+    <title>ELEA</title>
+  </head>
+  <body>
+    <div id="overlay" style="display:none;">
+      <div class="spinner"></div>
+      <br/>
+      <p class="text" style="color: cadetblue;font-weight: bold;">Please be patient, ELEA is analyzing your text.</p>
+    </div>
+    <br>
+    <div class="container">
+        <nav class="navbar navbar-expand navbar-dark sticky-top" style="background-color: #FFFFFF;">
+          <a class="navbar-brand">
+            <img src="{{ url_for('static', filename='images/ELEA.png') }}" alt="Logo" style="height:50px;">
+          </a>
+          <ul class="navbar-nav mr-auto"></ul>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+                <img src="{{ url_for('static', filename='images/logo-im.jpg') }}" alt="Logo" style="height:50px;">
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+              <h5 class="text-center">What's behind ELEA?</h5>
+              <p class="lead text-justify">
+                    ELEA is based on two neural networks that were trained and tested on a German corpus containing peer reviews from a pedagogical scenario. ELEA defines empathy as the <i>"ability to simply understand the other person’s perspective […] and to act emotionally on the other”</i> (Davis, 1983).
+                    Empathy consists of both emotional and cognitive empathy. <i>Emotional empathy</i> lets us feel what others are feeling, whereas <i>cognitive empathy</i> is the human's ability to recognize and understand others. (Lawrence, Shaw, Baker, Baron-Cohen & Davids, 2004)
+
+              </p>
+            </div>
+        </div>
+
+
+
+
+    </script>
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script> -->
+
+
+  </body>
+</html>
